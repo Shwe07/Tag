@@ -7,7 +7,7 @@ pipeline {
         string(name: 'TAG_VALUES', defaultValue: '', description: 'Comma-separated list of tag values')
     }
     environment {
-        REGION = 'ap-south-1'
+        REGION = 'ap-south-1b'
     }
     stages {
         stage('Validate Input') {
