@@ -7,7 +7,7 @@ pipeline {
         string(name: 'TAG_VALUES', defaultValue: '', description: 'Comma-separated list of tag values')
     }
     environment {
-        REGION = 'your-aws-region'
+        REGION = 'ap-south-1'
     }
     stages {
         stage('Validate Input') {
