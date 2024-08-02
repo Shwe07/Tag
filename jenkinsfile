@@ -1,12 +1,12 @@
 pipeline {
     agent any
     parameters {
-        string(name: 'INSTANCE_ID', defaultValue: '', description: 'EC2 Instance ID')
-        string(name: 'TAG_KEYS', defaultValue: '', description: 'Comma-separated list of tag keys')
-        string(name: 'TAG_VALUES', defaultValue: '', description: 'Comma-separated list of tag values')
+        string(name: 'INSTANCE_ID', defaultValue: '', description: 'i-0d0f9348affd68880')
+        string(name: 'TAG_KEYS', defaultValue: '', description: 'scheduler , backup')
+        string(name: 'TAG_VALUES', defaultValue: '', description: '2nd thu , 3rd wed')
     }
     environment {
-        REGION = 'your-aws-region'
+        REGION = 'ap-south-1'
     }
     stages {
         stage('Validate Input') {
