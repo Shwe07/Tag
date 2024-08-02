@@ -1,41 +1,19 @@
 pipeline {
     agent any
     parameters {
-        string(name: 'INSTANCE_ID', defaultValue: '', description: 'EC2 Instance ID')
-        string(name: 'TAG_KEYS', defaultValue: '', description: 'Comma-separated list of tag keys')
-        string(name: 'TAG_VALUES', defaultValue: '', description: 'Comma-separated list of tag values')
-    }
-    environment {
-        REGION = 'your-aws-region'
+        string(name: 'INSTANCE_ID', defaultValue: '', description: 'i-0d0f9348affd68880')
+        string(name: 'TAG_KEY1', defaultValue: '', description: 'scheduler')
+        string(name: 'TAG_VALUE1', defaultValue: '', description: '2nd thu')
+        string(name: 'TAG_KEY2', defaultValue: '', description: 'backup')
+        string(name: 'TAG_VALUE2', defaultValue: '', description: '3rd wed')
     }
     stages {
-        stage('Validate Input') {
+        stage('Attach Tags') {
             steps {
-                script {
-                    if (params.TAG_KEYS.split(',').length != params.TAG_VALUES.split(',').length) {
-                        error("The number of tag keys and values must be equal.")
-                    }
-                }
-            }
-        }
-        stage('Tag EC2 Instance') {
-            steps {
-                script {
-                    def tagKeys = params.TAG_KEYS.split(',')
-                    def tagValues = params.TAG_VALUES.split(',')
-                    def tags = []
- 
-                    for (int i = 0; i < tagKeys.length; i++) {
-                        tags.add([Key: tagKeys[i], Value: tagValues[i]])
-                    }
- 
-                    def tagCommand = "aws ec2 create-tags --resources ${params.INSTANCE_ID} --region ${REGION}"
- 
-                    for (tag in tags) {
-                        tagCommand += " --tags Key=${tag.Key},Value=${tag.Value}"
-                    }
- 
-                    sh tagCommand
+                withAWS(credentials: 'ec2-user', region: 'ap-south-1') {
+                    sh '''
+                    aws ec2 create-tags --resources ${INSTANCE_ID} --tags Key=${TAG_KEY1},Value=${TAG_VALUE1} Key=${TAG_KEY2},Value=${TAG_VALUE2}
+                    '''
                 }
             }
         }
