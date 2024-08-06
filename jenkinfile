@@ -35,7 +35,7 @@ pipeline {
                         tagCommand += " --tags Key=${tag.Key},Value=${tag.Value}"
                     }
  
-                    sh tagCommand
+                    bat tagCommand
                 }
             }
         }
