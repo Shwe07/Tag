@@ -11,7 +11,7 @@ pipeline {
         stage('Attach Tags') {
             steps {
                 withAWS(credentials: '623b975e-03d9-490b-acb0-3134873a213f', region: 'ap-south-1') {
-                    sh '''
+                    bat '''
                     aws ec2 create-tags --resources ${INSTANCE_ID} --tags Key=${TAG_KEY1},Value=${TAG_VALUE1} Key=${TAG_KEY2},Value=${TAG_VALUE2}
                     '''
                 }
